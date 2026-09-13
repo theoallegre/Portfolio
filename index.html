@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Théo Allègre — Portfolio</title>
+<meta name="description" content="Portfolio de Théo Allègre, chargé de communication & marketing — réseaux sociaux, vidéo, print.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Archivo:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="stage-wrapper">
+  <div class="device-stage" id="deviceStage">
+
+    <!-- Photo de bureau / ordinateur vintage en arrière-plan -->
+    <div class="desk-photo" id="deskPhoto">
+      <img alt="" id="deskPhotoImg" hidden>
+      <div class="desk-photo__placeholder" id="deskPhotoPlaceholder">
+        <span>Photo de bureau / ordinateur vintage à venir</span>
+        <small>assets/img/desk-photo.png (mobile) · assets/img/desk-photo-desktop.jpg (ordinateur)</small>
+      </div>
+    </div>
+
+    <!-- Écran CRT : Accueil / Boot / Menu -->
+    <div class="crt-screen" id="crtScreen">
+      <!-- .crt-tube : contenu de l'écran, animé en balayage à l'allumage
+           (voir js/main.js et .is-turning-on dans css/style.css). -->
+      <div class="crt-tube" id="crtTube">
+        <div class="crt-scanlines"></div>
+        <div class="crt-reflection"></div>
+        <div class="crt-vignette"></div>
+
+        <div class="screen-panel" id="screenHome">
+          <div class="home-content">
+            <div class="sys-label" id="sysLabel">PORTFOLIO - JUILLET 2026</div>
+            <div class="home-name" id="homeName">THÉO<br>ALLÈGRE</div>
+            <div class="home-tagline" id="homeTagline">Chargé de communication &amp; marketing</div>
+            <div class="home-sub">Communication · Marketing · Vidéo &amp; Print</div>
+            <button class="entree-btn" id="btnEntree" type="button">
+              ENTRÉE <span class="entree-btn__arrow"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="screen-panel" id="screenBoot" hidden>
+          <div class="boot-content" id="bootLines"></div>
+        </div>
+
+        <div class="screen-panel" id="screenMenu" hidden>
+          <div class="menu-content">
+            <div class="menu-title">MENU PRINCIPAL</div>
+            <div class="menu-divider"></div>
+            <nav class="menu-list" id="menuList"></nav>
+            <div class="menu-back" id="btnBackHome">‹ Retour à l'accueil</div>
+          </div>
+        </div>
+      </div>
+      <div class="crt-scanbar"></div>
+      <div class="crt-glow"></div>
+    </div>
+
+    <!-- Fenêtre : À propos -->
+    <div class="popup-window" id="windowApropos" data-window="apropos" hidden>
+      <div class="popup-scanlines"></div>
+      <div class="popup-vignette"></div>
+      <div class="hud-corner hud-corner--tl"></div>
+      <div class="hud-corner hud-corner--br"></div>
+      <header class="popup-header">
+        <div class="popup-header__title">
+          <span class="status-dot"></span>
+          <span>À PROPOS</span>
+        </div>
+        <button class="popup-close" data-close="apropos" type="button" aria-label="Fermer">✕</button>
+      </header>
+      <div class="popup-body" id="aboutScroll">
+        <div class="quote">Curieux, créatif, autodidacte</div>
+        <div class="divider"></div>
+        <div class="bullet-list" id="aboutParagraphs"></div>
+      </div>
+      <footer class="popup-footer" data-close="apropos">‹ Retour au menu</footer>
+    </div>
+
+    <!-- Fenêtre : Expériences -->
+    <div class="popup-window" id="windowParcours" data-window="parcours" hidden>
+      <div class="popup-scanlines"></div>
+      <div class="popup-vignette"></div>
+      <div class="hud-corner hud-corner--tl"></div>
+      <div class="hud-corner hud-corner--br"></div>
+      <header class="popup-header">
+        <div class="popup-header__title">
+          <span class="status-dot"></span>
+          <span>EXPÉRIENCES</span>
+        </div>
+        <button class="popup-close" data-close="parcours" type="button" aria-label="Fermer">✕</button>
+      </header>
+      <div class="popup-body popup-body--timeline" id="parcoursScroll"></div>
+      <footer class="popup-footer" data-close="parcours">‹ Retour au menu</footer>
+    </div>
+
+    <!-- Fenêtre : Formation -->
+    <div class="popup-window" id="windowFormation" data-window="formation" hidden>
+      <div class="popup-scanlines"></div>
+      <div class="popup-vignette"></div>
+      <div class="hud-corner hud-corner--tl"></div>
+      <div class="hud-corner hud-corner--br"></div>
+      <header class="popup-header">
+        <div class="popup-header__title">
+          <span class="status-dot"></span>
+          <span>FORMATION</span>
+        </div>
+        <button class="popup-close" data-close="formation" type="button" aria-label="Fermer">✕</button>
+      </header>
+      <div class="popup-body popup-body--timeline" id="formationScroll"></div>
+      <footer class="popup-footer" data-close="formation">‹ Retour au menu</footer>
+    </div>
+
+    <!-- Fenêtre : Mes projets -->
+    <div class="popup-window" id="windowProjets" data-window="projets" hidden>
+      <div class="popup-scanlines"></div>
+      <div class="popup-vignette"></div>
+      <div class="hud-corner hud-corner--tl"></div>
+      <div class="hud-corner hud-corner--br"></div>
+      <header class="popup-header">
+        <div class="popup-header__title">
+          <span class="status-dot"></span>
+          <span>MES PROJETS</span>
+        </div>
+        <button class="popup-close" data-close="projets" type="button" aria-label="Fermer">✕</button>
+      </header>
+      <div class="popup-body" id="projetsScroll"></div>
+      <div class="popup-body" id="projetDetailScroll" hidden></div>
+      <footer class="popup-footer" data-close="projets">‹ Retour au menu</footer>
+    </div>
+
+    <!-- Fenêtre : Logiciels et Contact -->
+    <div class="popup-window popup-window--contact" id="windowContact" data-window="contact" hidden>
+      <div class="popup-scanlines"></div>
+      <div class="popup-vignette"></div>
+      <div class="hud-corner hud-corner--tl"></div>
+      <div class="hud-corner hud-corner--br"></div>
+      <header class="popup-header">
+        <div class="popup-header__title">
+          <span class="status-dot"></span>
+          <span>LOGICIELS ET CONTACT</span>
+        </div>
+        <button class="popup-close" data-close="contact" type="button" aria-label="Fermer">✕</button>
+      </header>
+      <div class="popup-body popup-body--contact">
+        <div>
+          <div class="section-subtitle">Logiciels &amp; Outils</div>
+          <div class="software-grid" id="softwareGrid"></div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div class="section-subtitle">Contact</div>
+          <div class="contact-list" id="contactList"></div>
+        </div>
+      </div>
+      <footer class="popup-footer" data-close="contact">‹ Retour au menu</footer>
+    </div>
+
+  </div>
+</div>
+
+<!-- Visionneuse vidéo en grand plan, avec le son -->
+<div class="video-lightbox" id="videoLightbox" hidden>
+  <div class="video-lightbox__backdrop" id="videoLightboxBackdrop"></div>
+  <div class="video-lightbox__content">
+    <button class="video-lightbox__close" id="videoLightboxClose" type="button" aria-label="Fermer la vidéo">✕</button>
+    <video id="videoLightboxPlayer" controls playsinline></video>
+  </div>
+</div>
+
+<!-- Visionneuse document (PDF) en grand plan — voir la pièce en entier -->
+<div class="doc-lightbox" id="docLightbox" hidden>
+  <div class="doc-lightbox__backdrop" id="docLightboxBackdrop"></div>
+  <div class="doc-lightbox__content">
+    <div class="doc-lightbox__bar">
+      <span class="doc-lightbox__title" id="docLightboxTitle"></span>
+      <a class="doc-lightbox__open" id="docLightboxOpen" target="_blank" rel="noopener">Ouvrir le PDF ↗</a>
+      <button class="doc-lightbox__close" id="docLightboxClose" type="button" aria-label="Fermer le document">✕</button>
+    </div>
+    <div class="doc-lightbox__pages" id="docLightboxPages"></div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
