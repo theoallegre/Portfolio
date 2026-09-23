@@ -1012,6 +1012,10 @@ button { font: inherit; }
     min-height: 28dvh;
   }
   .popup-window--contact { top: 14dvh; max-height: 54dvh; }
+  /* Mes projets : un peu plus large et plus haute que les autres fenêtres,
+     pour que les cartes/médias des projets (Léo Lagrange Formation,
+     SoulGame Studio, SpotyVoyage) respirent davantage. */
+  #windowProjets { width: 47vw; top: 9dvh; max-height: 66dvh; min-height: 32dvh; }
 }
 
 /* Écrans très bas (paysage mobile) : éviter que les fenêtres dépassent */
