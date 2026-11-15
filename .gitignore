@@ -1,0 +1,19 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+
+# Outil de calibrage (images sources avec repère magenta) — non utilisé par le site.
+# Décommente si tu veux versionner ces fichiers.
+assets/calibration/
+
+# Réglages locaux de Claude Code
+.claude/
+
+# Maquettes de design (rangées dans un autre dépôt)
+Portfolio 2026/

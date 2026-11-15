@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Théo Allègre — Portfolio</title>
 <meta name="description" content="Portfolio de Théo Allègre, chargé de communication & marketing — réseaux sociaux, vidéo, print.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23071208'/%3E%3Crect x='3' y='3' width='58' height='58' rx='10' fill='none' stroke='%234dff8a' stroke-width='3'/%3E%3Ctext x='32' y='43' font-family='monospace' font-weight='700' font-size='30' text-anchor='middle' fill='%237fffa0'%3ETA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@1,700;1,800&family=Archivo:wght@700;800&display=swap" rel="stylesheet">
@@ -13,11 +14,20 @@
 <body>
 
 <div class="stage-wrapper">
-  <div class="device-stage" id="deviceStage">
+  <div class="device-stage ascii-scene" id="deviceStage">
+
+    <!-- Caméra : photo + écran CRT bougent ensemble (zoom, parallaxe).
+         Les fenêtres restent en dehors (position: fixed sur ordinateur,
+         qu'un transform sur un parent casserait). -->
+    <div class="scene-cam" id="sceneCam">
 
     <!-- Photo de bureau / ordinateur vintage en arrière-plan -->
     <div class="desk-photo" id="deskPhoto">
       <img alt="" id="deskPhotoImg" hidden>
+      <div class="lamp-glow" aria-hidden="true"></div>
+      <canvas class="lamp-dust" id="lampDust" aria-hidden="true"></canvas>
+      <div class="power-led" aria-hidden="true"></div>
+      <canvas id="deskPhotoAscii" aria-hidden="true"></canvas>
       <div class="desk-photo__placeholder" id="deskPhotoPlaceholder">
         <span>Photo de bureau / ordinateur vintage à venir</span>
         <small>assets/img/desk-photo.png (mobile) · assets/img/desk-photo-desktop.jpg (ordinateur)</small>
@@ -38,9 +48,9 @@
             <div class="sys-label" id="sysLabel">PORTFOLIO - JUILLET 2026</div>
             <div class="home-name" id="homeName">THÉO<br>ALLÈGRE</div>
             <div class="home-tagline" id="homeTagline">Chargé de communication &amp; marketing</div>
-            <div class="home-sub">Communication · Marketing · Vidéo &amp; Print</div>
+            <div class="home-sub" data-i18n="homeSub">Communication · Marketing · Vidéo &amp; Print</div>
             <button class="entree-btn" id="btnEntree" type="button">
-              ENTRÉE <span class="entree-btn__arrow"></span>
+              <span data-i18n="enter">ENTRÉE</span> <span class="entree-btn__arrow"></span>
             </button>
           </div>
         </div>
@@ -51,16 +61,21 @@
 
         <div class="screen-panel" id="screenMenu" hidden>
           <div class="menu-content">
-            <div class="menu-title">MENU PRINCIPAL</div>
+            <div class="menu-title" data-i18n="menuTitle">MENU PRINCIPAL</div>
             <div class="menu-divider"></div>
             <nav class="menu-list" id="menuList"></nav>
-            <div class="menu-back" id="btnBackHome">‹ Retour à l'accueil</div>
-          </div>
+            <div class="menu-back" id="btnBackHome" data-i18n="backHome">‹ Retour à l'accueil</div>          </div>
         </div>
+
+        <!-- Économiseur d'écran : se lance après un moment sans activité -->
+        <div class="screensaver" id="screensaver" hidden aria-hidden="true"><canvas></canvas></div>
       </div>
-      <div class="crt-scanbar"></div>
-      <div class="crt-glow"></div>
     </div>
+
+    <!-- Flash blanc au passage ASCII → photo (par-dessus l'écran noir) -->
+    <div class="scene-flash" aria-hidden="true"></div>
+
+    </div><!-- /.scene-cam -->
 
     <!-- Fenêtre : À propos -->
     <div class="popup-window" id="windowApropos" data-window="apropos" hidden>
@@ -71,16 +86,16 @@
       <header class="popup-header">
         <div class="popup-header__title">
           <span class="status-dot"></span>
-          <span>À PROPOS</span>
+          <span data-i18n="winApropos">À PROPOS</span>
         </div>
-        <button class="popup-close" data-close="apropos" type="button" aria-label="Fermer">✕</button>
+        <button class="popup-close" data-close="apropos" type="button" aria-label="Fermer" data-i18n-aria="close">✕</button>
       </header>
       <div class="popup-body" id="aboutScroll">
-        <div class="quote">Curieux, créatif, autodidacte</div>
+        <div class="quote" data-i18n="quote">Curieux, créatif, autodidacte</div>
         <div class="divider"></div>
         <div class="bullet-list" id="aboutParagraphs"></div>
       </div>
-      <footer class="popup-footer" data-close="apropos">‹ Retour au menu</footer>
+      <footer class="popup-footer" data-close="apropos" data-i18n="backMenu">‹ Retour au menu</footer>
     </div>
 
     <!-- Fenêtre : Expériences -->
@@ -92,12 +107,12 @@
       <header class="popup-header">
         <div class="popup-header__title">
           <span class="status-dot"></span>
-          <span>EXPÉRIENCES</span>
+          <span data-i18n="winParcours">EXPÉRIENCES</span>
         </div>
-        <button class="popup-close" data-close="parcours" type="button" aria-label="Fermer">✕</button>
+        <button class="popup-close" data-close="parcours" type="button" aria-label="Fermer" data-i18n-aria="close">✕</button>
       </header>
       <div class="popup-body popup-body--timeline" id="parcoursScroll"></div>
-      <footer class="popup-footer" data-close="parcours">‹ Retour au menu</footer>
+      <footer class="popup-footer" data-close="parcours" data-i18n="backMenu">‹ Retour au menu</footer>
     </div>
 
     <!-- Fenêtre : Formation -->
@@ -109,12 +124,12 @@
       <header class="popup-header">
         <div class="popup-header__title">
           <span class="status-dot"></span>
-          <span>FORMATION</span>
+          <span data-i18n="winFormation">FORMATION</span>
         </div>
-        <button class="popup-close" data-close="formation" type="button" aria-label="Fermer">✕</button>
+        <button class="popup-close" data-close="formation" type="button" aria-label="Fermer" data-i18n-aria="close">✕</button>
       </header>
       <div class="popup-body popup-body--timeline" id="formationScroll"></div>
-      <footer class="popup-footer" data-close="formation">‹ Retour au menu</footer>
+      <footer class="popup-footer" data-close="formation" data-i18n="backMenu">‹ Retour au menu</footer>
     </div>
 
     <!-- Fenêtre : Mes projets -->
@@ -126,13 +141,13 @@
       <header class="popup-header">
         <div class="popup-header__title">
           <span class="status-dot"></span>
-          <span>MES PROJETS</span>
+          <span data-i18n="winProjets">MES PROJETS</span>
         </div>
-        <button class="popup-close" data-close="projets" type="button" aria-label="Fermer">✕</button>
+        <button class="popup-close" data-close="projets" type="button" aria-label="Fermer" data-i18n-aria="close">✕</button>
       </header>
       <div class="popup-body" id="projetsScroll"></div>
       <div class="popup-body" id="projetDetailScroll" hidden></div>
-      <footer class="popup-footer" id="projetsFooter">‹ Retour au menu</footer>
+      <footer class="popup-footer" id="projetsFooter" data-i18n="backMenu">‹ Retour au menu</footer>
     </div>
 
     <!-- Fenêtre : Logiciels et Contact -->
@@ -144,32 +159,41 @@
       <header class="popup-header">
         <div class="popup-header__title">
           <span class="status-dot"></span>
-          <span>LOGICIELS ET CONTACT</span>
+          <span data-i18n="winContact">LOGICIELS ET CONTACT</span>
         </div>
-        <button class="popup-close" data-close="contact" type="button" aria-label="Fermer">✕</button>
+        <button class="popup-close" data-close="contact" type="button" aria-label="Fermer" data-i18n-aria="close">✕</button>
       </header>
       <div class="popup-body popup-body--contact">
         <div>
-          <div class="section-subtitle">Logiciels &amp; Outils</div>
+          <div class="section-subtitle" data-i18n="software">Logiciels &amp; Outils</div>
           <div class="software-grid" id="softwareGrid"></div>
         </div>
         <div class="divider"></div>
         <div>
-          <div class="section-subtitle">Contact</div>
+          <div class="section-subtitle" data-i18n="contact">Contact</div>
           <div class="contact-list" id="contactList"></div>
         </div>
       </div>
-      <footer class="popup-footer" data-close="contact">‹ Retour au menu</footer>
+      <footer class="popup-footer" data-close="contact" data-i18n="backMenu">‹ Retour au menu</footer>
     </div>
 
   </div>
 </div>
 
+<!-- Passer l'intro ASCII (visible seulement pendant l'intro) -->
+<button class="skip-intro" id="skipIntro" type="button" data-i18n="skip">PASSER L'INTRO ›</button>
+
+<!-- Langue : FR | EN (recharge la page dans l'autre langue, sans rejouer l'intro) -->
+<button class="lang-toggle" id="langToggle" type="button"><span data-lang="fr">FR</span><span class="lang-toggle__sep">|</span><span data-lang="en">EN</span></button>
+
+<!-- Son : coupé/activé, mémorisé dans le navigateur -->
+<button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true">SON : ON</button>
+
 <!-- Visionneuse vidéo en grand plan, avec le son -->
 <div class="video-lightbox" id="videoLightbox" hidden>
   <div class="video-lightbox__backdrop" id="videoLightboxBackdrop"></div>
   <div class="video-lightbox__content">
-    <button class="video-lightbox__close" id="videoLightboxClose" type="button" aria-label="Fermer la vidéo">✕</button>
+    <button class="video-lightbox__close" id="videoLightboxClose" type="button" aria-label="Fermer la vidéo" data-i18n-aria="closeVideo">✕</button>
     <video id="videoLightboxPlayer" controls playsinline></video>
   </div>
 </div>
@@ -180,8 +204,8 @@
   <div class="doc-lightbox__content">
     <div class="doc-lightbox__bar">
       <span class="doc-lightbox__title" id="docLightboxTitle"></span>
-      <a class="doc-lightbox__open" id="docLightboxOpen" target="_blank" rel="noopener">Ouvrir le PDF ↗</a>
-      <button class="doc-lightbox__close" id="docLightboxClose" type="button" aria-label="Fermer le document">✕</button>
+      <a class="doc-lightbox__open" id="docLightboxOpen" target="_blank" rel="noopener" data-i18n="openPdf">Ouvrir le PDF ↗</a>
+      <button class="doc-lightbox__close" id="docLightboxClose" type="button" aria-label="Fermer le document" data-i18n-aria="closeDoc">✕</button>
     </div>
     <div class="doc-lightbox__pages" id="docLightboxPages"></div>
   </div>
